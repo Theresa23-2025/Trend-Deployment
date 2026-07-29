@@ -1,3 +1,11 @@
-node_modules
-.env
-build
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Node
+node_modules/
+
+# Docker
+*.log
