@@ -29,9 +29,11 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-
                     bat '''
-                    echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+                    @echo off
+                    echo Logging into Docker Hub...
+                    echo|set /p=%DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+                    if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%
                     '''
                 }
             }
@@ -56,7 +58,6 @@ pipeline {
     }
 
     post {
-
         success {
             echo 'Pipeline completed successfully!'
         }
