@@ -1,0 +1,60 @@
+{
+    "LoadBalancerDescriptions": [
+        {
+            "LoadBalancerName": "a183e174cdbd547daa62d21ab028c67f",
+            "DNSName": "a183e174cdbd547daa62d21ab028c67f-1179281742.us-west-2.elb.amazonaws.com",
+            "CanonicalHostedZoneName": "a183e174cdbd547daa62d21ab028c67f-1179281742.us-west-2.elb.amazonaws.com",
+            "CanonicalHostedZoneNameID": "Z1H1FL5HABSF5",
+            "ListenerDescriptions": [
+                {
+                    "Listener": {
+                        "Protocol": "TCP",
+                        "LoadBalancerPort": 80,
+                        "InstanceProtocol": "TCP",
+                        "InstancePort": 30129
+                    },
+                    "PolicyNames": []
+                }
+            ],
+            "Policies": {
+                "AppCookieStickinessPolicies": [],
+                "LBCookieStickinessPolicies": [],
+                "OtherPolicies": []
+            },
+            "BackendServerDescriptions": [],
+            "AvailabilityZones": [
+                "us-west-2a",
+                "us-west-2b"
+            ],
+            "Subnets": [
+                "subnet-0c96b5e87e955ac97",
+                "subnet-0dd7fe37aa1a09b6c"
+            ],
+            "VPCId": "vpc-066996c4aa3612317",
+            "Instances": [
+                {
+                    "InstanceId": "i-041b643f85c1ebab9"
+                },
+                {
+                    "InstanceId": "i-0a4909b20c9f1a7c5"
+                }
+            ],
+            "HealthCheck": {
+                "Target": "TCP:30129",
+                "Interval": 10,
+                "Timeout": 5,
+                "UnhealthyThreshold": 6,
+                "HealthyThreshold": 2
+            },
+            "SourceSecurityGroup": {
+                "OwnerAlias": "037063405138",
+                "GroupName": "k8s-elb-a183e174cdbd547daa62d21ab028c67f"
+            },
+            "SecurityGroups": [
+                "sg-03172f0888189f899"
+            ],
+            "CreatedTime": "2026-07-29T09:34:02.360000+00:00",
+            "Scheme": "internet-facing"
+        }
+    ]
+}
