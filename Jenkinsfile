@@ -32,7 +32,14 @@ pipeline {
                     bat '''
                     @echo off
                     echo Logging into Docker Hub...
-                    echo|set /p=%DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
+
+                    rem Create a temporary file containing only the PAT
+                    > dockerpass.txt echo %DOCKER_PASS%
+
+                    type dockerpass.txt | docker login -u %DOCKER_USER% --password-stdin
+
+                    del dockerpass.txt
+
                     if %ERRORLEVEL% NEQ 0 exit /b %ERRORLEVEL%
                     '''
                 }
@@ -58,16 +65,16 @@ pipeline {
     }
 
     post {
+        always {
+            bat 'docker logout'
+        }
+
         success {
             echo 'Pipeline completed successfully!'
         }
 
         failure {
             echo 'Pipeline failed!'
-        }
-
-        always {
-            bat 'docker logout'
         }
     }
 }
