@@ -30,8 +30,8 @@ pipeline {
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
 
-                    powershell '''
-                    $env:DOCKER_PASS | docker login -u $env:DOCKER_USER --password-stdin
+                    bat '''
+                    echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
                     '''
                 }
             }
