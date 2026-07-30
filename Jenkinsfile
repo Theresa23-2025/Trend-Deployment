@@ -15,7 +15,10 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t %IMAGE_NAME% .'
+                bat '''
+                docker version
+                docker build -t %IMAGE_NAME% .
+                '''
             }
         }
 
@@ -26,31 +29,44 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    bat 'echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin'
+
+                    powershell '''
+                    $env:DOCKER_PASS | docker login -u $env:DOCKER_USER --password-stdin
+                    '''
                 }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                bat 'docker push %IMAGE_NAME%'
+                bat '''
+                docker push %IMAGE_NAME%
+                '''
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                bat 'kubectl rollout restart deployment trend-app'
+                bat '''
+                kubectl rollout restart deployment trend-app
+                kubectl rollout status deployment trend-app
+                '''
             }
         }
     }
 
     post {
+
         success {
             echo 'Pipeline completed successfully!'
         }
 
         failure {
             echo 'Pipeline failed!'
+        }
+
+        always {
+            bat 'docker logout'
         }
     }
 }
